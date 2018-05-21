@@ -14,8 +14,8 @@ async def handle_setup(message: discord.Message, client: discord.Client):
         embed=discord.Embed(
             color=discord.Color.blue(),
             description="The setup for creating the server rules has been started successfully. First of all, "
-                        "please send me the **channel** of the channel where you want the rules to appear later "
-                        "as mention (#yourchannel)"))
+                        "send me the channel mention (mention your channel; #yourchannel)"
+                       ))
 
     def check_author(m):
         if m.author.id == message.author.id and m.channel.id == message.channel.id:
@@ -27,22 +27,21 @@ async def handle_setup(message: discord.Message, client: discord.Client):
         channelid = chani.id
     except:
         await message.channel.send(embed=discord.Embed(color=discord.Color.red(),
-                                                           description="ERROR: You didn`t mentioned a channel"))
+                                                           description="ERROR: You didn`t mention the channel"))
         return
     await message.channel.send(
         embed=discord.Embed(
             color=discord.Color.blue(),
-            description="Okay i have the channel id now please send me the rules as text. **Markdown**: "
-                        "http://markdown.thebotdev.de"))
+            description="Okay I have the channel id, next send me rules in text format. **Markdown**: "
+                        "https://thebotdev.de/Markdown.html"))
     rul = await client.wait_for("message", check=check_author, timeout=None)
     rulestext = rul.content
     await message.channel.send(
         embed=discord.Embed(
             color=discord.Color.blue(),
-            description="Well, what should happen if a user does not accept the rules or does not react to them? I "
-                        "can kick or ban those users if you want me to kick the user please write 1 and if you want "
-                        "me to ban him please write 2. and only once as a comment please answer only with 1 or 2 and "
-                        "nothing else."))
+            description="What should happen if user does not accept rules or does not react to them? I "
+                        "can kick or ban them. If you want me to kick the user write 1 oe if you want "
+                        "me to ban him please write 2. Please answer only with 1 or 2 and nothign else"))
     act = await client.wait_for("message", check=check_author, timeout=None)
     action = None
     if act.content == "1":
@@ -55,9 +54,9 @@ async def handle_setup(message: discord.Message, client: discord.Client):
             await channel.send(
                 embed=discord.Embed(
                     color=discord.Color.blue(),
-                    description="Almost done! This is the penultimate question. What role should I assign to the user "
-                                "if he or she accepts the rules? Please send me the roles id, in order to get them I "
-                                "send you here once all roles with the corresponding id:\n" + roles))
+                    description="Almost done! This is the penultimate question. Which role should I assign to the user "
+                                "if it accepts the rules? Please send me the role id, in order to get them."
+                                " I have send you all roles with the corresponding id:\n" + roles))
         except discord.Forbidden:
             await channel.send(
                 embed=discord.Embed(
